@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Student Scheduler / Progress Tracker</string>
+    <string name="add_term">add_term</string>
+    <string name="term_name_and_number">term_name_and_number</string>
+    <string name="add_course">add_course</string>
+    <string name="Course_Title">Course Title</string>
+    <string name="assessment_date">Date</string>
+    <string name="assessment_type">Type</string>
+    <string name="assessment_title">Assessment Title</string>
+    <string name="assessment_id">ID</string>
+    <string name="course_id">Course ID</string>
+    <string name="add_assessment">Add Assessment</string>
+    <string-array name="course_status">
+        <item>Planned</item>
+        <item>Dropped</item>
+        <item>Completed</item>
+        <item>In Progress</item>
+    </string-array>
+    <string-array name="course_assessment_type">
+        <item>Objective</item>
+        <item>Performance</item>
+    </string-array>
+</resources>

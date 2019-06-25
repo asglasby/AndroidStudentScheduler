@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Progress"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/termListBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/termListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:onClick="openTermListView"
+        android:text="Term List"
+        app:layout_constraintEnd_toEndOf="@+id/courseListBtn"
+        app:layout_constraintStart_toStartOf="@+id/courseListBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/courseListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:onClick="openCourseListView"
+        android:text="Course List"
+        app:layout_constraintBaseline_toBaselineOf="@+id/courseListDetailBtn"
+        app:layout_constraintEnd_toStartOf="@+id/courseListDetailBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/assessmentListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="25dp"
+        android:onClick="openAssessmentListView"
+        android:text="Assessments"
+        app:layout_constraintEnd_toStartOf="@+id/courseListDetailBtn"
+        app:layout_constraintStart_toStartOf="@+id/courseListBtn"
+        app:layout_constraintTop_toBottomOf="@+id/courseListBtn" />
+
+    <Button
+        android:id="@+id/termListDetailBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="39dp"
+        android:onClick="openTermListView"
+        android:text="Term List Details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/courseListDetailBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="4dp"
+        android:onClick="openCourseListView"
+        android:text="Course List Details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/courseListBtn"
+        app:layout_constraintTop_toBottomOf="@+id/termListDetailBtn" />
+
+</android.support.constraint.ConstraintLayout>

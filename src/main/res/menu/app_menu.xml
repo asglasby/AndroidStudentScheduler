@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/homeItem"
+        app:showAsAction="never"/>
+    <item android:title="Terms"
+        android:id="@+id/termItem"
+        app:showAsAction="never">
+        <menu>
+            <item android:title="Term Details"
+                android:id="@+id/subTermItem"/>
+
+        </menu>
+
+    </item>
+    <item android:title="Courses"
+        android:id="@+id/courseItem"
+        app:showAsAction="never">
+    <menu>
+        <item android:title="Course Details"
+            android:id="@+id/subCourseItem"/>
+    </menu>
+    </item>
+    <item android:title="Assessments"
+        android:id="@+id/assessmentItem"
+        app:showAsAction="never">
+        <menu>
+            <item android:title="Assessment Details"
+                android:id="@+id/subAssessmentItem"/>
+
+        </menu>
+    </item>
+    <item android:title="Progress"
+        android:id="@+id/progressItem"
+        app:showAsAction="never"/>
+</menu>
