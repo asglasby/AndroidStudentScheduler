@@ -37,18 +37,18 @@ public class TermAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        convertView = inflater.inflate(R.layout.my_custom_listview,null);
+        convertView = inflater.inflate(R.layout.custom_term_listview,null);
         // TextView t1_id = (TextView)convertView.findViewById(R.id.id_txt);
         TextView t2_termTitle = (TextView)convertView.findViewById(R.id.title_txt);
-        TextView t3_termStart = (TextView)convertView.findViewById(R.id.start_txt);
-        TextView t4_termEnd = (TextView)convertView.findViewById(R.id.end_txt);
+       // TextView t3_termStart = (TextView)convertView.findViewById(R.id.start_txt);
+       // TextView t4_termEnd = (TextView)convertView.findViewById(R.id.end_txt);
 
         Term term = termArrayList.get(position);
 
         // t1_id.setText(String.valueOf(term.getTermID()));
         t2_termTitle.setText(term.getTermTitle());
-        t3_termStart.setText(term.getTermStart());
-        t4_termEnd.setText(term.getTermEnd());
+       // t3_termStart.setText(term.getTermStart());
+       // t4_termEnd.setText(term.getTermEnd());
 
         return convertView;
     }

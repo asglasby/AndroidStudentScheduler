@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.ArrayAdapter;
 
 import com.example.myapp3.Models.Assessment;
+import com.example.myapp3.Models.AssessmentNote;
 import com.example.myapp3.Models.Course;
 import com.example.myapp3.Models.Note;
 import com.example.myapp3.Models.Term;
@@ -37,7 +38,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void createTermTable(){
-        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS term (termID INTEGER PRIMARY KEY AUTOINCREMENT, termTitle TEXT NOT NULL UNIQUE, termStart DATE,termEnd DATE)");
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS term (termID INTEGER PRIMARY KEY AUTOINCREMENT, termTitle TEXT NOT NULL, termStart DATE,termEnd DATE)");
 
     }
 
@@ -45,8 +46,12 @@ public class DbHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS term ");
     }
 
+    public void alterCourseTable(){
+        this.getWritableDatabase().execSQL("ALTER TABLE course RENAME TO _course_old");
+    }
+
     public void createCourseTable(){
-        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS course (courseID INTEGER PRIMARY KEY AUTOINCREMENT, courseTitle TEXT NOT NULL UNIQUE, startDate DATE, endDate DATE, status TEXT, mentorName TEXT, mentorPhone TEXT, mentorEmail TEXT, assessment TEXT, termID INTEGER)");
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS course (courseID INTEGER PRIMARY KEY AUTOINCREMENT, courseTitle TEXT NOT NULL, startDate DATE, endDate DATE, status TEXT, mentorName TEXT, mentorPhone TEXT, mentorEmail TEXT, termID INTEGER)");
     }
 
     public void dropCourseTable(){
@@ -54,7 +59,8 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void createAssessmentTable(){
-        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessment (assessmentID INTEGER PRIMARY KEY AUTOINCREMENT, assessmentTitle TEXT NOT NULL, assessmentType TEXT NOT NULL, assessmentDate DATE, courseID INTEGER)");
+        // this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessment (assessmentID INTEGER PRIMARY KEY AUTOINCREMENT, assessmentTitle TEXT NOT NULL, assessmentType TEXT NOT NULL, assessmentDate DATE, courseID INTEGER)");
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessment (assessmentID INTEGER PRIMARY KEY AUTOINCREMENT, assessmentTitle TEXT NOT NULL, assessmentType TEXT NOT NULL, assessmentDate DATE, courseID INTEGER, CONSTRAINT fk_course FOREIGN KEY (courseID) REFERENCES course(courseID) ON DELETE CASCADE)");
     }
 
     public void dropAssessmentTable(){
@@ -66,7 +72,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void createNoteTable(){
-        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS note (noteID INTEGER PRIMARY KEY AUTOINCREMENT, noteText TEXT NOT NULL, courseID INTEGER NOT NULL )");
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS note (noteID INTEGER PRIMARY KEY AUTOINCREMENT, noteText TEXT NOT NULL, courseID INTEGER NOT NULL, CONSTRAINT fk_course FOREIGN KEY (courseID) REFERENCES course(courseID) ON DELETE CASCADE)");
     }
 
     public void dropNoteTable(){
@@ -79,6 +85,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public void dropMentorTable(){
         this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS mentor");
+    }
+
+    public void createAssessmentNoteTable(){
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessmentnote (noteID INTEGER PRIMARY KEY AUTOINCREMENT, noteText TEXT NOT NULL, assessmentID INTEGER NOT NULL, CONSTRAINT fk_assessment FOREIGN KEY (assessmentID) REFERENCES assessment(assessmentID) ON DELETE CASCADE )");
+    }
+
+    public void dropAssessmentNoteTable(){
+        this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS assessmentnote");
     }
 
 
@@ -124,12 +138,12 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(noteTitleKey, noteTitleValue);
         values.put(courseIdKey, courseIdValue);
 
-        return db.update("note", values, "noteID = ?", new String[] {noteTitleValue});
+        return db.update("note", values, "noteID = ?", new String[] {noteIdValue});
     }
 
 
 
-    public long addCourse(String courseNameKey, String courseNameValue, String courseStartKey, String courseStartValue, String courseEndKey, String courseEndValue, String statusKey, String statusValue, String courseMentorKey, String courseMentorValue, String courseMentorPhoneKey, String courseMentorPhoneValue, String courseMentorEmailKey, String courseMentorEmailValue, String assessmentTypeKey, String assessmentTypeValue, String termIdKey, String termIdValue){
+    public long addCourse(String courseNameKey, String courseNameValue, String courseStartKey, String courseStartValue, String courseEndKey, String courseEndValue, String statusKey, String statusValue, String courseMentorKey, String courseMentorValue, String courseMentorPhoneKey, String courseMentorPhoneValue, String courseMentorEmailKey, String courseMentorEmailValue, String termIdKey, String termIdValue){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -140,13 +154,12 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(courseMentorKey, courseMentorValue);
         values.put(courseMentorPhoneKey, courseMentorPhoneValue);
         values.put(courseMentorEmailKey, courseMentorEmailValue);
-        values.put(assessmentTypeKey, assessmentTypeValue);
         values.put(termIdKey, termIdValue);
 
         return db.insert("course", null, values);
     }
 
-    public long updateCourse(String courseIDKey, String courseIDValue, String courseNameKey, String courseNameValue, String courseStartKey, String courseStartValue, String courseEndKey, String courseEndValue, String statusKey, String statusValue, String courseMentorKey, String courseMentorValue, String courseMentorPhoneKey, String courseMentorPhoneValue, String courseMentorEmailKey, String courseMentorEmailValue, String assessmentTypeKey, String assessmentTypeValue, String termIdKey, String termIdValue){
+    public long updateCourse(String courseIDKey, String courseIDValue, String courseNameKey, String courseNameValue, String courseStartKey, String courseStartValue, String courseEndKey, String courseEndValue, String statusKey, String statusValue, String courseMentorKey, String courseMentorValue, String courseMentorPhoneKey, String courseMentorPhoneValue, String courseMentorEmailKey, String courseMentorEmailValue, String termIdKey, String termIdValue){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -158,7 +171,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(courseMentorKey, courseMentorValue);
         values.put(courseMentorPhoneKey, courseMentorPhoneValue);
         values.put(courseMentorEmailKey, courseMentorEmailValue);
-        values.put(assessmentTypeKey, assessmentTypeValue);
+       // values.put(assessmentTypeKey, assessmentTypeValue);
         values.put(termIdKey, termIdValue);
 
         return db.update("course", values, "courseID = ?", new String[] {courseIDValue});
@@ -193,6 +206,27 @@ public class DbHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL(sqlStatement);
     }
 
+    public long addAssessmentNote(String noteTitleKey, String noteTitleValue, String assessmentIdKey, String assessmentIdValue){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(noteTitleKey, noteTitleValue);
+        values.put(assessmentIdKey, assessmentIdValue);
+
+        return db.insert("assessmentnote", null, values);
+    }
+
+    public long updateAssessmentNote(String noteIdKey, String noteIdValue, String noteTitleKey, String noteTitleValue, String assessmentIdKey, String assessmentIdValue){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(noteIdKey, noteIdValue);
+        values.put(noteTitleKey, noteTitleValue);
+        values.put(assessmentIdKey, assessmentIdValue);
+
+        return db.update("assessmentnote", values, "noteID = ?", new String[] {noteIdValue});
+    }
+
     public ArrayList<Term> readRecords(String sqlStatement){
         ArrayList<Term> allTerms = new ArrayList<Term>();
         int termID;
@@ -224,7 +258,6 @@ public class DbHelper extends SQLiteOpenHelper {
         String mentorName;
         String mentorPhone;
         String mentorEmail;
-        String assessmentType;
         int termID;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -239,10 +272,9 @@ public class DbHelper extends SQLiteOpenHelper {
             mentorName = cursor.getString(cursor.getColumnIndex("mentorName"));
             mentorPhone = cursor.getString(cursor.getColumnIndex("mentorPhone"));
             mentorEmail = cursor.getString(cursor.getColumnIndex("mentorEmail"));
-            assessmentType = cursor.getString(cursor.getColumnIndex("assessment"));
             termID = cursor.getInt(cursor.getColumnIndex("termID"));
 
-            allCourses.add(new Course(courseID, courseName, courseStart, courseEnd, status, mentorName, mentorPhone, mentorEmail, assessmentType, termID));
+            allCourses.add(new Course(courseID, courseName, courseStart, courseEnd, status, mentorName, mentorPhone, mentorEmail, termID));
         }
         return allCourses;
     }
@@ -286,6 +318,25 @@ public class DbHelper extends SQLiteOpenHelper {
             courseId = cursor.getInt(cursor.getColumnIndex("courseID"));
 
             allNotes.add(new Note(noteId, noteText, courseId));
+        }
+        return allNotes;
+    }
+
+    public ArrayList<AssessmentNote> readAssessmentNoteRecords(String sqlStatement){
+        ArrayList<AssessmentNote> allNotes = new ArrayList<>();
+        int noteId;
+        String noteText;
+        int assessmentId;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sqlStatement, null);
+
+        while(cursor.moveToNext()){
+            noteId = cursor.getInt(cursor.getColumnIndex("noteID"));
+            noteText = cursor.getString(cursor.getColumnIndex("noteText"));
+            assessmentId = cursor.getInt(cursor.getColumnIndex("assessmentID"));
+
+            allNotes.add(new AssessmentNote(noteId, noteText, assessmentId));
         }
         return allNotes;
     }

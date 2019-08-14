@@ -42,12 +42,12 @@ public class NoteAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.my_note_listview,null);
 
         TextView text = (TextView)convertView.findViewById(R.id.noteText);
-        TextView courseId = (TextView)convertView.findViewById(R.id.courseId);
+      //  TextView courseId = (TextView)convertView.findViewById(R.id.courseId);
 
         Note note = noteArrayList.get(position);
 
         text.setText(note.getNoteText());
-        courseId.setText(String.valueOf(note.getCourseID()));
+       // courseId.setText(String.valueOf(note.getCourseID()));
 
         return convertView;
     }

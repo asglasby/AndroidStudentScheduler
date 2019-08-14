@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddNewCourseActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <EditText
+        android:id="@+id/courseTitle"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/Course_Title"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/courseMentor"
+        app:layout_constraintEnd_toStartOf="@+id/mentorPhone"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/courseStart"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Start Date"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/deletebtn"
+        app:layout_constraintEnd_toStartOf="@+id/courseEnd"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startClassDate" />
+
+    <Button
+        android:id="@+id/deletebtn"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="addCourseToDB"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseStart" />
+
+    <TextView
+        android:id="@+id/courseEnd"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="End Date"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/deletebtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/courseStart"
+        app:layout_constraintTop_toBottomOf="@+id/endClassDate" />
+
+    <EditText
+        android:id="@+id/courseMentor"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Mentor Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/courseStatus"
+        app:layout_constraintEnd_toStartOf="@+id/mentorEmail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseTitle" />
+
+    <Spinner
+        android:id="@+id/courseStatus"
+        android:layout_width="563dp"
+        android:layout_height="45dp"
+        android:entries="@array/course_status"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/startClassDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseMentor" />
+
+    <EditText
+        android:id="@+id/mentorPhone"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Mentor Phone"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/mentorEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/courseTitle"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/mentorEmail"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:hint="Mentor Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/courseStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/courseMentor"
+        app:layout_constraintTop_toBottomOf="@+id/mentorPhone" />
+
+    <Button
+        android:id="@+id/startClassDate"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:text="Start Date"
+        app:layout_constraintBottom_toTopOf="@+id/courseStart"
+        app:layout_constraintEnd_toStartOf="@+id/endClassDate"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseStatus" />
+
+    <Button
+        android:id="@+id/endClassDate"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:text="End Date"
+        app:layout_constraintBottom_toTopOf="@+id/courseEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/startClassDate"
+        app:layout_constraintTop_toBottomOf="@+id/courseStatus" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -6,35 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".AssessmentList">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <ListView
         android:id="@+id/AssessmentList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="400dp"
+        android:layout_height="626dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/addAssessment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/add_assessment"
-        android:onClick="openEditorForNewAssessment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 </android.support.constraint.ConstraintLayout>

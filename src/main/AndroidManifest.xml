@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EmailActivity"></activity>
+        <activity android:name=".OptionsMenuActivity" />
+        <activity android:name=".ProgressActivity" />
+        <activity android:name=".AddNewAssessmentNoteActivity" />
+        <activity android:name=".EditorAssessmentNoteActivity" />
+        <activity android:name=".AssessmentNoteListActivity" />
+        <activity android:name=".CourseAssessmentActivity" />
+        <activity android:name=".EmailActivity" />
         <activity android:name=".TextActivity" />
         <activity android:name=".AddNewNoteActivity" />
         <activity android:name=".EditorNoteActivity" />

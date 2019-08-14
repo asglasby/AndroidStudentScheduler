@@ -8,13 +8,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class TextActivity extends AppCompatActivity {
-    private String noteTextIntent;
+public class TextActivity extends OptionsMenuActivity {
     private String noteText;
     EditText noteTextEditText;
     EditText phoneNumberEditText;
@@ -27,11 +27,14 @@ public class TextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         noteTextEditText = (EditText)findViewById(R.id.note_txt);
         phoneNumberEditText = (EditText)findViewById(R.id.phoneTxt);
 
 
-        noteTextIntent = getIntent().getStringExtra(EXTRA_NOTE_TEXT);
+        String noteTextIntent = getIntent().getStringExtra(EXTRA_NOTE_TEXT);
 
         noteTextEditText.setText(noteTextIntent);
 

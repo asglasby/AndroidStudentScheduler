@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddNewNoteActivity extends AppCompatActivity {
+public class AddNewNoteActivity extends OptionsMenuActivity {
     private EditText noteText;
     private String courseIdIntent;
 
@@ -16,20 +17,22 @@ public class AddNewNoteActivity extends AppCompatActivity {
 
     DbHelper myDbConnection;
 
-    SQLiteDatabase sqLiteDatabase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_note);
 
-        courseIdIntent = getIntent().getStringExtra(EXTRA_COURSE_ID);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        myDbConnection = new DbHelper(AddNewNoteActivity.this);
+        myDbConnection.getWritableDatabase();
+
+        courseIdIntent = getIntent().getStringExtra(EXTRA_COURSE_ID);
     }
 
     public void addNoteToDB(View view){
-        myDbConnection = new DbHelper(AddNewNoteActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
+
         EditText noteTextEditText = (EditText)findViewById(R.id.noteText);
 
         String text = noteTextEditText.getText().toString();
@@ -39,16 +42,17 @@ public class AddNewNoteActivity extends AppCompatActivity {
 
         myDbConnection.addNote(noteText, text, courseID, courseIdIntent);
 
-        myDbConnection.close();
-
         goBackToMain();
-       // finish();
-
     }
 
     public void goBackToMain(){
         Intent intent = new Intent(this, CourseList.class);
-
         startActivity(intent);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        myDbConnection.close();
     }
 }

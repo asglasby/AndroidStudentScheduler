@@ -9,8 +9,10 @@ public class Course {
     private String mentorName;
     private String mentorPhone;
     private String mentorEmail;
-    private String assessmentType;
+   // private String assessmentType;
     private int termID;
+
+    /*
 
     public Course(int courseID, String courseName, String courseStart, String courseEnd, String status, String mentorName, String mentorPhone, String mentorEmail, String assessmentType, int termID) {
         this.courseID = courseID;
@@ -21,7 +23,21 @@ public class Course {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.assessmentType = assessmentType;
+       // this.assessmentType = assessmentType;
+        this.termID = termID;
+    }
+
+    */
+    public Course(int courseID, String courseName, String courseStart, String courseEnd, String status, String mentorName, String mentorPhone, String mentorEmail, int termID) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.courseStart = courseStart;
+        this.courseEnd = courseEnd;
+        this.status = status;
+        this.mentorName = mentorName;
+        this.mentorPhone = mentorPhone;
+        this.mentorEmail = mentorEmail;
+        // this.assessmentType = assessmentType;
         this.termID = termID;
     }
 
@@ -81,6 +97,7 @@ public class Course {
         this.mentorName = mentorName;
     }
 
+    /*
     public String getAssessmentType() {
         return assessmentType;
     }
@@ -88,6 +105,7 @@ public class Course {
     public void setAssessmentType(String assessmentType) {
         this.assessmentType = assessmentType;
     }
+    */
 
     public int getTermID() {
         return termID;

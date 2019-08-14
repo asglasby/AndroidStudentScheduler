@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditorAssessmentActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <EditText
+        android:id="@+id/assessment_title_txt"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:hint="@string/assessment_title"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/updatebtn"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentType"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+    <!--
+    <EditText
+        android:id="@+id/assessment_type_txt"
+        android:layout_width="301dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="Assessment Type"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="82dp" />
+    -->
+
+    <Button
+        android:id="@+id/deletebtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:onClick="deleteAssessment"
+        android:text="Delete"
+        app:layout_constraintBottom_toTopOf="@+id/goalDate"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentNotesBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/updatebtn"
+        app:layout_constraintTop_toBottomOf="@+id/assessmentType" />
+
+    <EditText
+        android:id="@+id/assessment_date_txt"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="Assessment Date"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/assessmentNotesBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/assessmentType"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+    <!--
+    <EditText
+        android:id="@+id/course_id_txt"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="Course Id"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="274dp" />
+    -->
+
+
+    <Button
+        android:id="@+id/updatebtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:onClick="updateAssessment"
+        android:text="Update"
+        app:layout_constraintBottom_toTopOf="@+id/goalDateBtn"
+        app:layout_constraintEnd_toStartOf="@+id/deletebtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assessment_title_txt" />
+
+    <Button
+        android:id="@+id/assessmentNotesBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="openAssessmentNotes"
+        android:text="Notes"
+        app:layout_constraintBottom_toTopOf="@+id/goalDateAlertBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/deletebtn"
+        app:layout_constraintTop_toBottomOf="@+id/assessment_date_txt" />
+
+    <TextView
+        android:id="@+id/goalDate"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/goalDateAlertBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/goalDateBtn"
+        app:layout_constraintTop_toBottomOf="@+id/deletebtn" />
+
+    <Button
+        android:id="@+id/goalDateAlertBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Set Goal Alert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/goalDate"
+        app:layout_constraintTop_toBottomOf="@+id/assessmentNotesBtn" />
+
+    <Button
+        android:id="@+id/goalDateBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Goal Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/goalDate"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updatebtn" />
+
+    <Spinner
+        android:id="@+id/assessmentType"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/deletebtn"
+        app:layout_constraintEnd_toStartOf="@+id/assessment_date_txt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/assessment_title_txt"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="Assessment Type"
+        app:layout_constraintBottom_toTopOf="@+id/assessmentType"
+        app:layout_constraintEnd_toStartOf="@+id/textView16"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Assessment Title"
+        app:layout_constraintBottom_toTopOf="@+id/assessment_title_txt"
+        app:layout_constraintEnd_toStartOf="@+id/textView14"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Assessment Date"
+        app:layout_constraintBottom_toTopOf="@+id/assessment_date_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+</android.support.constraint.ConstraintLayout>

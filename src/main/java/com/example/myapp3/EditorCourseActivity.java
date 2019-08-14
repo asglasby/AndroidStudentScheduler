@@ -1,30 +1,42 @@
 package com.example.myapp3;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapp3.Models.Course;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditorCourseActivity extends AppCompatActivity {
+public class EditorCourseActivity extends OptionsMenuActivity implements DatePickerDialog.OnDateSetListener {
     private EditText courseTitle;
-    private EditText courseStart;
-    private EditText courseEnd;
+   // private EditText courseStart;
+   // private EditText courseEnd;
+    private TextView courseStart;
+    private TextView courseEnd;
     private EditText courseStatus;
     private EditText courseMentor;
     private EditText courseAssessment;
@@ -42,8 +54,10 @@ public class EditorCourseActivity extends AppCompatActivity {
     private String courseAssessmentIntent;
     private String termIdIntent;
     private EditText courseTitleEditText;
-    private EditText courseStartEditText;
-    private EditText courseEndEditText;
+   // private EditText courseStartEditText;
+    private TextView courseStartTextView;
+    private TextView courseEndTextView;
+    //private EditText courseEndEditText;
     private EditText courseStatusEditText;
     private EditText courseMentorEditText;
     private EditText courseMentorPhoneEditText;
@@ -56,13 +70,13 @@ public class EditorCourseActivity extends AppCompatActivity {
     Spinner assessmentSpinner;
     int courseStatusPosition;
     int assessmentTypePosition;
-
+    int datePickerNum = 0;
 
     DbHelper myDbConnection;
 
-    SQLiteDatabase sqLiteDatabase;
+
     Map<String, Integer> statusMap = new HashMap<>();
-    Map<String, Integer> assessmentMap = new HashMap<>();
+
 
     private static final String EXTRA_ADD_UPDATE = "com.example.myapp3.add_update";
     private static final String EXTRA_COURSE_ID = "com.example.myapp3.course_id";
@@ -73,7 +87,6 @@ public class EditorCourseActivity extends AppCompatActivity {
     private static final String EXTRA_COURSE_MENTOR_NAME = "com.example.myapp3.mentor_name";
     private static final String EXTRA_COURSE_MENTOR_PHONE = "com.example.myapp3.mentor_phone";
     private static final String EXTRA_COURSE_MENTOR_EMAIL = "com.example.myapp3.mentor_email";
-    private static final String EXTRA_COURSE_ASSESSMENT_TYPE = "com.example.myapp3.course_assessment_type";
     private static final String EXTRA_TERM_ID = "com.example.myapp3.term_id";
     private EditText courseMentorPhone;
     private EditText courseMentorEmail;
@@ -84,24 +97,31 @@ public class EditorCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_course);
 
-        newCourse = new Course();
+        myDbConnection = new DbHelper(EditorCourseActivity.this);
+        myDbConnection.getWritableDatabase();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // newCourse = new Course();
 
         courseTitleEditText = (EditText)findViewById(R.id.courseTitle);
-        courseStartEditText = (EditText)findViewById(R.id.courseStart);
-        courseEndEditText = (EditText)findViewById(R.id.courseEnd);
-       // courseStatusEditText = (EditText)findViewById(R.id.courseStatus);
-      //  courseAssessmentEditText = (EditText)findViewById(R.id.courseAssessment);
-        // termIdEditText = (EditText)findViewById(R.id.termId);
         courseMentorEditText = (EditText)findViewById(R.id.courseMentor);
         courseMentorPhoneEditText = (EditText)findViewById(R.id.courseMentorPhone);
         courseMentorEmailEditText = (EditText)findViewById(R.id.courseMentorEmail);
+        // courseStartEditText = (EditText)findViewById(R.id.courseStart);
+        // courseEndEditText = (EditText)findViewById(R.id.courseEnd);
+        courseStartTextView = (TextView) findViewById(R.id.courseStart);
+        courseEndTextView = (TextView) findViewById(R.id.courseEnd);
+
+
 
         courseTitle = (EditText)findViewById(R.id.courseTitle);
-        courseStart = (EditText)findViewById(R.id.courseStart);
-        courseEnd = (EditText)findViewById(R.id.courseEnd);
-       // courseStatus = (EditText)findViewById(R.id.courseStatus);
-       // courseAssessment = (EditText)findViewById(R.id.courseAssessment);
-       // termId = (EditText)findViewById(R.id.termId);
+        courseStart = (TextView) findViewById(R.id.courseStart);
+       // courseStart = (EditText)findViewById(R.id.courseStart);
+       // courseEnd = (EditText)findViewById(R.id.courseEnd);
+        courseEnd = (TextView) findViewById(R.id.courseEnd);
+
         courseMentor = (EditText)findViewById(R.id.courseMentor);
         courseMentorPhone = (EditText)findViewById(R.id.courseMentorPhone);
         courseMentorEmail = (EditText)findViewById(R.id.courseMentorEmail);
@@ -113,29 +133,31 @@ public class EditorCourseActivity extends AppCompatActivity {
         courseStartIntent = getIntent().getStringExtra(EXTRA_COURSE_START);
         courseEndIntent = getIntent().getStringExtra(EXTRA_COURSE_END);
         courseStatusIntent = getIntent().getStringExtra(EXTRA_COURSE_STATUS);
-        courseAssessmentIntent = getIntent().getStringExtra(EXTRA_COURSE_ASSESSMENT_TYPE);
+
         courseMentorIntent = getIntent().getStringExtra(EXTRA_COURSE_MENTOR_NAME);
         courseMentorPhoneIntent = getIntent().getStringExtra(EXTRA_COURSE_MENTOR_PHONE);
         courseMentorEmailIntent = getIntent().getStringExtra(EXTRA_COURSE_MENTOR_EMAIL);
         termIdIntent = getIntent().getStringExtra(EXTRA_TERM_ID);
 
         courseTitleEditText.setText(courseTitleIntent);
-        courseStartEditText.setText(courseStartIntent);
-        courseEndEditText.setText(courseEndIntent);
-        // courseStatusEditText.setText(courseStatusIntent);
-        // courseAssessmentEditText.setText(courseAssessmentIntent);
+        courseStartTextView.setText(courseStartIntent);
+        // courseStartEditText.setText(courseStartIntent);
+        courseEndTextView.setText(courseEndIntent);
+        // courseEndEditText.setText(courseEndIntent);
+
         courseMentorEditText.setText(courseMentorIntent);
         courseMentorPhoneEditText.setText(courseMentorPhoneIntent);
         courseMentorEmailEditText.setText(courseMentorEmailIntent);
-       // termIdEditText.setText(termIdIntent);
+
 
         statusSpinner = (Spinner)findViewById(R.id.courseStatus);
-        assessmentSpinner = (Spinner)findViewById(R.id.courseAssessment);
+
+
         String [] statusArray = {"Planned", "Dropped", "In Progress", "Completed"};
-        String [] assessmentArray = {"Objective", "Performance"};
+
 
         ArrayAdapter<String> statusArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, statusArray );
-        ArrayAdapter<String> assessmentArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, assessmentArray );
+
 
         statusSpinner.setAdapter(statusArrayAdapter);
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,21 +172,6 @@ public class EditorCourseActivity extends AppCompatActivity {
             }
         });
 
-        assessmentSpinner.setAdapter(assessmentArrayAdapter);
-        assessmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                assessmentTypePosition = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-       // Map<String, Integer> statusMap = new HashMap<>();
         statusMap.put("Planned", 0);
         statusMap.put("Dropped", 1);
         statusMap.put("In Progress", 2);
@@ -177,11 +184,27 @@ public class EditorCourseActivity extends AppCompatActivity {
             statusSpinner.setSelection(3);
         }
 
-        // Map<String, Integer> assessmentMap = new HashMap<>();
-        assessmentMap.put("Objective", 0);
-        assessmentMap.put("Performance",1);
+        Button startOfClass = (Button) findViewById(R.id.startClassDate);
+        Button endOfClass = (Button) findViewById(R.id.endClassDate);
 
-        assessmentSpinner.setSelection(assessmentMap.get(courseAssessmentIntent));
+        startOfClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerNum = 1;
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "Date Picker");
+            }
+        });
+
+        endOfClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerNum = 0;
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "Date Picker");
+            }
+        });
+
 
         Button startOfClassAlarm = (Button)findViewById(R.id.startAlarmBtn);
         Button endOfClassAlarm = (Button)findViewById(R.id.startAlarmBtn);
@@ -189,14 +212,15 @@ public class EditorCourseActivity extends AppCompatActivity {
         startOfClassAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String startDate = courseStartEditText.getText().toString();
+                String startDate = courseStartTextView.getText().toString();
                 Calendar calendar = Calendar.getInstance();
 
                 int year = Integer.parseInt(startDate.substring(0,4));
                 int month = Integer.parseInt(startDate.substring(5,7));
                 int day = Integer.parseInt(startDate.substring(8));
-                Toast.makeText(EditorCourseActivity.this, "Date: " + year + " " +month +" "+ day, Toast.LENGTH_LONG).show();
-                calendar.set(year, month - 1, day, 4,10,1);
+
+                Toast.makeText(EditorCourseActivity.this, "An alert will go off at 12:01 am on Date: " + startDate, Toast.LENGTH_LONG).show();
+                calendar.set(year, month - 1, day, 00,01,01);
 
                 Intent intent = new Intent(EditorCourseActivity.this, AlarmReceiver.class);
                 PendingIntent sender= PendingIntent.getBroadcast(EditorCourseActivity.this,0,intent,0);
@@ -208,14 +232,14 @@ public class EditorCourseActivity extends AppCompatActivity {
         endOfClassAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String startDate = courseStartEditText.getText().toString();
+                String startDate = courseStartTextView.getText().toString();
                 Calendar calendar = Calendar.getInstance();
 
                 int year = Integer.parseInt(startDate.substring(0,4));
                 int month = Integer.parseInt(startDate.substring(5,7));
                 int day = Integer.parseInt(startDate.substring(8));
-                Toast.makeText(EditorCourseActivity.this, "Date: " + year + " " +month +" "+ day, Toast.LENGTH_LONG).show();
-                calendar.set(year, month - 1, day, 4,10,1);
+                Toast.makeText(EditorCourseActivity.this, "An alert will go off at 12:01 am on Date: " + startDate, Toast.LENGTH_LONG).show();
+                calendar.set(year, month - 1, day, 00,01,1);
 
                 Intent intent = new Intent(EditorCourseActivity.this, AlarmReceiver.class);
                 PendingIntent sender= PendingIntent.getBroadcast(EditorCourseActivity.this,0,intent,0);
@@ -225,33 +249,48 @@ public class EditorCourseActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = simpleDateFormat.format(calendar.getTime());
+
+        // String dateString = DateFormat.getDateInstance().format(calendar.getTime());
+
+        if(datePickerNum == 1){
+            TextView startDate = (TextView) findViewById(R.id.courseStart);
+            startDate.setText(dateString);
+        }
+        else{
+            TextView endDate = (TextView) findViewById(R.id.courseEnd);
+            endDate.setText(dateString);
+        }
+    }
+
     public void deleteCourse(View view){
         if(EditorTermActivity.deleteFromTerm){
             updateCourse(view);
             goBackToTermList();
 
         }else{
-            myDbConnection = new DbHelper(EditorCourseActivity.this);
-            sqLiteDatabase = myDbConnection.getWritableDatabase();
-
             int intCourseId = Integer.parseInt(courseIdIntent);
 
             myDbConnection.deleteRecord("DELETE FROM course WHERE courseID = " + intCourseId);
-
-            myDbConnection.close();
 
             goBackToMain();
         }
     }
 
     public void updateCourse(View view){
-        myDbConnection = new DbHelper(EditorCourseActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
 
         String title = courseTitleEditText.getText().toString();
-        String start = courseStartEditText.getText().toString();
-        String end = courseEndEditText.getText().toString();
-        // String courseStatus = courseStatusEditText.getText().toString();
+        String start = courseStartTextView.getText().toString();
+        String end = courseEndTextView.getText().toString();
+
         String courseStatus;
         String courseMentor = courseMentorEditText.getText().toString();
         String courseMentorPhone = courseMentorPhoneEditText.getText().toString();
@@ -287,10 +326,10 @@ public class EditorCourseActivity extends AppCompatActivity {
         String mentor = "mentorName";
         String mentorPhone = "mentorPhone";
         String mentorEmail = "mentorEmail";
-        String assessment = "assessment";
+
         String termId = "termId";
 
-        myDbConnection.updateCourse(courseID, courseIdIntent, courseTitle, title, startDate, start, endDate, end, status, courseStatus, mentor, courseMentor, mentorPhone, courseMentorPhone, mentorEmail, courseMentorEmail, assessment, assessmentType, termId, courseTermId );
+        myDbConnection.updateCourse(courseID, courseIdIntent, courseTitle, title, startDate, start, endDate, end, status, courseStatus, mentor, courseMentor, mentorPhone, courseMentorPhone, mentorEmail, courseMentorEmail, termId, courseTermId );
 
         if(EditorTermActivity.deleteFromTerm) {
             EditorTermActivity deleteCourse = new EditorTermActivity();
@@ -318,6 +357,19 @@ public class EditorCourseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NoteListActivity.class);
         intent.putExtra(EXTRA_COURSE_ID, courseIdIntent);
         startActivity(intent);
+    }
+
+    public void openCourseAssessments(View view){
+        Intent intent = new Intent(this, CourseAssessmentActivity.class);
+        intent.putExtra(EXTRA_COURSE_ID, courseIdIntent);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        myDbConnection.close();
     }
 }
 

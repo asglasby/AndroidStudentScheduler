@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +28,7 @@ import java.util.ListIterator;
 
 import static java.sql.Types.NULL;
 
-public class EditorTermActivity extends AppCompatActivity {
+public class EditorTermActivity extends OptionsMenuActivity {
 
     private EditText termName;
     private EditText termStart;
@@ -80,10 +81,13 @@ public class EditorTermActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_term);
 
-        courseListListView = (ListView)findViewById(R.id.CourseList);
+        myDbConnection = new DbHelper(EditorTermActivity.this);
+        myDbConnection.getWritableDatabase();
 
-        newTerm = new Term();
-        oldTerm = new Term();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        courseListListView = (ListView)findViewById(R.id.CourseList);
 
         termNameEditText = (EditText)findViewById(R.id.termName);
         termStartEditText = (EditText)findViewById(R.id.termStart);
@@ -104,16 +108,9 @@ public class EditorTermActivity extends AppCompatActivity {
         termStartEditText.setText(termStartIntent);
         termEndEditText.setText(termEndIntent);
 
-
-        Toast.makeText(this, "Term title: " + termNameIntent +" TermID: " + termId, Toast.LENGTH_LONG).show();
-
         simpleSpinner = (Spinner)findViewById(R.id.courseSpinner);
 
-        myDbConnection = new DbHelper(EditorTermActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
-
         simpleList = myDbConnection.readCourseRecords("SELECT * FROM course");
-
 
         for(Course c: simpleList){
             if(c.getTermID() == NULL){
@@ -143,16 +140,10 @@ public class EditorTermActivity extends AppCompatActivity {
 
     public void deleteTerm(View view){
         if(termCourseList.isEmpty()){
-            myDbConnection = new DbHelper(EditorTermActivity.this);
-            sqLiteDatabase = myDbConnection.getWritableDatabase();
-            //String[] whereArgs = {"1"};
-            //String[] whereArgs = {termId};
 
             int intTermId = Integer.parseInt(termId);
-            //int rows = myDbConnection.removeRecord("term", "id = ?", whereArgs);
-            myDbConnection.deleteRecord("DELETE FROM term WHERE termID = " + intTermId);
 
-            myDbConnection.close();
+            myDbConnection.deleteRecord("DELETE FROM term WHERE termID = " + intTermId);
 
             goBackToMain();
         }else{
@@ -163,11 +154,6 @@ public class EditorTermActivity extends AppCompatActivity {
     }
 
     public void updateTerm(View view){
-        myDbConnection = new DbHelper(EditorTermActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
-
-        // int intTermId = Integer.parseInt(termId);
-
 
         String title = termNameEditText.getText().toString();
         String start = termStartEditText.getText().toString();
@@ -180,22 +166,16 @@ public class EditorTermActivity extends AppCompatActivity {
 
         myDbConnection.updateTerm(termID, termId, termTitle, title, termStart, start, termEnd, end);
 
-        myDbConnection.close();
-
-        // goBackToMain();
-        finish();
-
+        goBackToMain();
     }
 
     public void goBackToMain(){
-        Intent intent = new Intent(this, TermList.class);
-        // startActivityForResult(intent, EDITOR_REQUEST_CODE);
+        Intent intent = new Intent(EditorTermActivity.this, TermList.class);
         startActivity(intent);
     }
 
     public void goBackToEditorTermActivity(){
         Intent intent = new Intent(this, EditorTermActivity.class);
-        // startActivityForResult(intent, EDITOR_REQUEST_CODE);
         startActivity(intent);
     }
 
@@ -204,37 +184,24 @@ public class EditorTermActivity extends AppCompatActivity {
         Spinner sp = (Spinner)findViewById(R.id.courseSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditorTermActivity.this, R.layout.course_spinner_layout, R.id.courseNameTxt, listCourse);
         sp.setAdapter(adapter);
-        //adapter.notifyDataSetChanged();
     }
 
 
    public void addCourseToTerm(View view){
-       myDbConnection = new DbHelper(EditorTermActivity.this);
-       sqLiteDatabase = myDbConnection.getWritableDatabase();
-
-       //String courseName = simpleList.get(1).getCourseName();
 
        int intTermId = Integer.parseInt(termId);
        int intCourseId = availableCourseList.get(coursePosition).getCourseID();
 
        myDbConnection.insertRecord("UPDATE course SET termID = " + intTermId + " WHERE courseID = " + intCourseId);
 
-       myDbConnection.close();
        availableCourseList.remove(coursePosition);
        loadCoursesToTerm();
-      // goBackToMain();
-      // finish();
    }
 
    public void loadCoursesToTerm(){
        termCourseList.clear();
 
-       myDbConnection = new DbHelper(EditorTermActivity.this);
-       sqLiteDatabase = myDbConnection.getWritableDatabase();
-       //sqLiteDatabase = myDbConnection.getReadableDatabase();
-
        allCoursesArrayList = myDbConnection.readCourseRecords("SELECT * FROM course");
-       myDbConnection.close();
 
        for(Course c: allCoursesArrayList){
            if(c.getTermID() == Integer.parseInt(termId)){
@@ -242,7 +209,6 @@ public class EditorTermActivity extends AppCompatActivity {
            }
        }
 
-       // courseAdapter = new CourseAdapter(this, CourseList.allCoursesArrayList);
        courseAdapter = new CourseAdapter(this, termCourseList);
        courseListListView.setAdapter(courseAdapter);
        courseAdapter.notifyDataSetChanged();
@@ -256,12 +222,11 @@ public class EditorTermActivity extends AppCompatActivity {
                String courseStart = termCourseList.get(position).getCourseStart();
                String courseEnd = termCourseList.get(position).getCourseEnd();
                String status = termCourseList.get(position).getStatus();
-              // int mentorIdFromArry = termCourseList.get(position).getMentorID();
-               String assessmentType = termCourseList.get(position).getAssessmentType();
+
                int termIdFromArray = termCourseList.get(position).getTermID();
                int courseIdFromArray = termCourseList.get(position).getCourseID();
                String courseId = Integer.toString(courseIdFromArray);
-             //  String mentorId = Integer.toString(mentorIdFromArry);
+
                String termId = Integer.toString(termIdFromArray);
 
                Intent intent = new Intent(EditorTermActivity.this, EditorCourseActivity.class);
@@ -272,8 +237,7 @@ public class EditorTermActivity extends AppCompatActivity {
                intent.putExtra(EXTRA_COURSE_START, courseStart);
                intent.putExtra(EXTRA_COURSE_END, courseEnd);
                intent.putExtra(EXTRA_COURSE_STATUS, status);
-             //  intent.putExtra(EXTRA_COURSE_MENTOR_ID, mentorId);
-               intent.putExtra(EXTRA_COURSE_ASSESSMENT_TYPE, assessmentType);
+
                intent.putExtra(EXTRA_TERM_ID, termId);
 
                startActivity(intent);
@@ -284,4 +248,10 @@ public class EditorTermActivity extends AppCompatActivity {
    public void deleteCourseFromTerm(){
         termCourseList.remove(termCoursePosition);
    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        myDbConnection.close();
+    }
 }

@@ -2,37 +2,39 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home"
+    <item android:title="@string/home"
         android:id="@+id/homeItem"
-        app:showAsAction="never"/>
-    <item android:title="Terms"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="ifRoom" />
+
+    <item android:title="@string/terms"
         android:id="@+id/termItem"
-        app:showAsAction="never">
-        <menu>
-            <item android:title="Term Details"
-                android:id="@+id/subTermItem"/>
+        app:showAsAction="never" />
 
-        </menu>
+    <item android:title="@string/term_details"
+        android:id="@+id/subTermItem"
+        app:showAsAction="never" />
 
-    </item>
-    <item android:title="Courses"
+
+    <item android:title="@string/courses"
         android:id="@+id/courseItem"
-        app:showAsAction="never">
-    <menu>
-        <item android:title="Course Details"
-            android:id="@+id/subCourseItem"/>
-    </menu>
-    </item>
-    <item android:title="Assessments"
-        android:id="@+id/assessmentItem"
-        app:showAsAction="never">
-        <menu>
-            <item android:title="Assessment Details"
-                android:id="@+id/subAssessmentItem"/>
+        app:showAsAction="never" />
 
-        </menu>
-    </item>
-    <item android:title="Progress"
+    <item android:title="@string/course_details"
+        android:id="@+id/subCourseItem"
+        app:showAsAction="never" />
+
+
+    <item android:title="@string/assessments"
+        android:id="@+id/assessmentItem"
+        app:showAsAction="never" />
+
+    <item android:title="@string/assessment_details"
+        android:id="@+id/subAssessmentItem"
+        app:showAsAction="never" />
+
+
+    <item android:title="@string/progress"
         android:id="@+id/progressItem"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProgressActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="313dp"
+        android:layout_height="51dp"
+        app:layout_constraintBottom_toTopOf="@+id/classTotalTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <EditText
+        android:id="@+id/classTotalTxt"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:hint="Total Classess"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/classCompleteTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <EditText
+        android:id="@+id/classCompleteTxt"
+        android:layout_width="139dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:hint="Classess Completed"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/classInProgressTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/classTotalTxt" />
+
+    <EditText
+        android:id="@+id/classInProgressTxt"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:hint="Classes In Progress"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/classPlannedTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/classCompleteTxt" />
+
+    <EditText
+        android:id="@+id/classPlannedTxt"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:hint="Planned Classes"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/classDroppedTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/classInProgressTxt" />
+
+    <EditText
+        android:id="@+id/classDroppedTxt"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Dropped Classes"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/classPlannedTxt" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:text="Total Classes"
+        app:layout_constraintBaseline_toBaselineOf="@+id/classTotalTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:text="Completed Classes"
+        app:layout_constraintBaseline_toBaselineOf="@+id/classCompleteTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:text="Classes  In Progress"
+        app:layout_constraintBaseline_toBaselineOf="@+id/classInProgressTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:text="Planned Classes"
+        app:layout_constraintBaseline_toBaselineOf="@+id/classPlannedTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:text="Dropped Classes"
+        app:layout_constraintBaseline_toBaselineOf="@+id/classDroppedTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="170dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="60dp"
+        android:text="Completed Courses"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

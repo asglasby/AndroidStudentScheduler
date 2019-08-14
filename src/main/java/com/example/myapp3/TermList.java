@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,7 +18,7 @@ import com.example.myapp3.Models.Term;
 
 import java.util.ArrayList;
 
-public class TermList extends AppCompatActivity {
+public class TermList extends OptionsMenuActivity {
 
     private static final String EXTRA_ADD_UPDATE = "com.example.myapp3.add_update";
     private static final String EXTRA_TERM_ID = "com.example.myapp3.term_id";
@@ -69,23 +72,17 @@ public class TermList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     public void openEditorForNewTerm(View view) {
-        Intent intent = new Intent(this, AddNewTermActivity.class);
+        Intent intent = new Intent(TermList.this, AddNewTermActivity.class);
         startActivity(intent);
     }
 
     public void loadTermData(){
         allTermsArrayList = myDbConnection.readRecords("SELECT * FROM term");
 
-        for(Term term : allTermsArrayList){
-            Log.d(TAG, term.getTermID() + " " + term.getTermTitle()+ " " + term.getTermStart()+ " " + term.getTermEnd());
-        }
-
-        termAdapter = new TermAdapter(this, allTermsArrayList);
+        termAdapter = new TermAdapter(TermList.this, allTermsArrayList);
         termListListView.setAdapter(termAdapter);
         termAdapter.notifyDataSetChanged();
     }

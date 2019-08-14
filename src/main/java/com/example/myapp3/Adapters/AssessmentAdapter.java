@@ -40,20 +40,20 @@ public class AssessmentAdapter extends BaseAdapter {
 
         convertView = inflater.inflate(R.layout.my_assessment_listview,null);
 
-        TextView assessmentId = (TextView)convertView.findViewById(R.id.assessment_id_txt);
+        // TextView assessmentId = (TextView)convertView.findViewById(R.id.assessment_id_txt);
         TextView assessmentTitle = (TextView)convertView.findViewById(R.id.assessment_title_txt);
-        TextView assessmentType = (TextView)convertView.findViewById(R.id.assessment_type_txt);
-        TextView assessmentDate = (TextView)convertView.findViewById(R.id.assessment_date_txt);
-        TextView courseId = (TextView)convertView.findViewById(R.id.course_id_txt);
+        // TextView assessmentType = (TextView)convertView.findViewById(R.id.assessment_type_txt);
+        // TextView assessmentDate = (TextView)convertView.findViewById(R.id.assessment_date_txt);
+        // TextView courseId = (TextView)convertView.findViewById(R.id.course_id_txt);
 
 
         Assessment assessment = assessmentArrayList.get(position);
 
-        assessmentId.setText(String.valueOf(assessment.getAssessmentID()));
+       //  assessmentId.setText(String.valueOf(assessment.getAssessmentID()));
         assessmentTitle.setText(assessment.getAssessmentTitle());
-        assessmentType.setText(assessment.getAssessmentType());
-        assessmentDate.setText(assessment.getAssessmentDate());
-        courseId.setText(String.valueOf(assessment.getCourseID()));
+       //  assessmentType.setText(assessment.getAssessmentType());
+       // assessmentDate.setText(assessment.getAssessmentDate());
+       // courseId.setText(String.valueOf(assessment.getCourseID()));
 
 
 

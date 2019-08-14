@@ -4,28 +4,30 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddNewTermActivity extends AppCompatActivity {
+public class AddNewTermActivity extends OptionsMenuActivity {
 
     private EditText termName;
     private EditText termStart;
     private EditText termEnd;
     DbHelper myDbConnection;
 
-    SQLiteDatabase sqLiteDatabase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_term);
+        myDbConnection = new DbHelper(AddNewTermActivity.this);
+        myDbConnection.getWritableDatabase();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     public void addTermToDB(View view){
-        myDbConnection = new DbHelper(AddNewTermActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
 
         EditText termNameEditText = (EditText)findViewById(R.id.termName);
         EditText termStartEditText = (EditText)findViewById(R.id.termStart);
@@ -40,16 +42,17 @@ public class AddNewTermActivity extends AppCompatActivity {
         String termEnd = "termEnd";
         myDbConnection.addRecord(termTitle, title, termStart, start, termEnd, end);
 
-
-        Toast.makeText(AddNewTermActivity.this, "Rows Record added: " , Toast.LENGTH_LONG ).show();
-        myDbConnection.close();
-
         goBackToMain();
     }
 
     public void goBackToMain(){
-        Intent intent = new Intent(this, MainActivity.class);
-
+        Intent intent = new Intent(AddNewTermActivity.this, TermList.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        myDbConnection.close();
     }
 }

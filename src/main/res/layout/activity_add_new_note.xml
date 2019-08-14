@@ -6,17 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".AddNewNoteActivity">
 
+     <include
+         android:id="@+id/toolbar"
+         layout="@layout/toolbar" />
+
 
     <EditText
         android:id="@+id/noteText"
-        android:layout_width="390dp"
+        android:layout_width="350dp"
         android:layout_height="0dp"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="68dp"
-        android:layout_marginEnd="11dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="79dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Enter Your Note Here"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/addbtn"
         app:layout_constraintEnd_toEndOf="parent"

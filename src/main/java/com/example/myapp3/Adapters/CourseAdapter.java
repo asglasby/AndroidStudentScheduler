@@ -45,20 +45,20 @@ public class CourseAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.my_course_listview,null);
 
         TextView c2_courseTitle = (TextView)convertView.findViewById(R.id.name_txt);
-        TextView c3_startData = (TextView)convertView.findViewById(R.id.start_txt);
-        TextView c4_endDate = (TextView)convertView.findViewById(R.id.end_txt);
+       // TextView c3_startData = (TextView)convertView.findViewById(R.id.start_txt);
+       // TextView c4_endDate = (TextView)convertView.findViewById(R.id.end_txt);
         //TextView c5_status = (TextView)convertView.findViewById(R.id.status_txt);
        // TextView c6_mentor = (TextView)convertView.findViewById(R.id.mentor_txt);
-        TextView c7_assessment = (TextView)convertView.findViewById(R.id.assessment_txt);
+       // TextView c7_assessment = (TextView)convertView.findViewById(R.id.assessment_txt);
 
         Course course = courseArrayList.get(position);
 
         c2_courseTitle.setText(course.getCourseName());
-        c3_startData.setText(course.getCourseStart());
-        c4_endDate.setText(course.getCourseEnd());
+       // c3_startData.setText(course.getCourseStart());
+        //c4_endDate.setText(course.getCourseEnd());
        // c5_status.setText(course.getStatus());
        // c6_mentor.setText(String.valueOf(course.getMentorID()));
-        c7_assessment.setText(course.getAssessmentType());
+       // c7_assessment.setText(course.getAssessmentType());
 
 
         return convertView;

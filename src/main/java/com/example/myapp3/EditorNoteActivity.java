@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import com.example.myapp3.Models.Note;
 
 
-public class EditorNoteActivity extends AppCompatActivity {
+public class EditorNoteActivity extends OptionsMenuActivity {
     private EditText noteText;
     private EditText courseId;
     private String mode;
@@ -34,13 +35,19 @@ public class EditorNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_note);
 
-        newNote = new Note();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        myDbConnection = new DbHelper(EditorNoteActivity.this);
+        sqLiteDatabase = myDbConnection.getWritableDatabase();
+
+       // newNote = new Note();
 
         noteTextEditText = (EditText)findViewById(R.id.noteText);
 
         noteText = (EditText)findViewById(R.id.noteText);
 
-        mode = getIntent().getStringExtra(EXTRA_ADD_UPDATE);
+        // mode = getIntent().getStringExtra(EXTRA_ADD_UPDATE);
 
         noteTextIntent = getIntent().getStringExtra(EXTRA_NOTE_TEXT);
         noteIdIntent = getIntent().getStringExtra(EXTRA_NOTE_ID);
@@ -51,11 +58,7 @@ public class EditorNoteActivity extends AppCompatActivity {
     }
 
     public void updateNote(View view) {
-        myDbConnection = new DbHelper(EditorNoteActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
-
         String note = noteTextEditText.getText().toString();
-
 
         String courseID = "courseID";
         String noteText = "noteText";
@@ -63,22 +66,16 @@ public class EditorNoteActivity extends AppCompatActivity {
 
         myDbConnection.updateNote(noteID, noteIdIntent, noteText, note, courseID, courseIdIntent);
 
-        myDbConnection.close();
-
-        finish();
+        goBackToMain();
+        //finish();
     }
 
     public void deleteNote(View view) {
-        myDbConnection = new DbHelper(EditorNoteActivity.this);
-        sqLiteDatabase = myDbConnection.getWritableDatabase();
-
         int intNoteId = Integer.parseInt(noteIdIntent);
-
         myDbConnection.deleteRecord("DELETE FROM note WHERE noteID = " + intNoteId);
 
-        myDbConnection.close();
+        goBackToMain();
 
-        finish();
     }
 
     public void textNote(View view) {
@@ -93,5 +90,16 @@ public class EditorNoteActivity extends AppCompatActivity {
         String note = noteTextEditText.getText().toString();
         intent.putExtra(EXTRA_NOTE_TEXT, note);
         startActivity(intent);
+    }
+
+    public void goBackToMain(){
+        Intent intent = new Intent(this, CourseList.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        myDbConnection.close();
     }
 }

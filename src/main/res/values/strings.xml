@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Student Scheduler / Progress Tracker</string>
+    <string name="app_name">Student Scheduler and Progress Tracker</string>
     <string name="add_term">add_term</string>
     <string name="term_name_and_number">term_name_and_number</string>
     <string name="add_course">add_course</string>
@@ -10,6 +10,19 @@
     <string name="assessment_id">ID</string>
     <string name="course_id">Course ID</string>
     <string name="add_assessment">Add Assessment</string>
+    <string name="home">Home</string>
+    <string name="terms">Terms</string>
+    <string name="term_details">Term Details</string>
+    <string name="courses">Courses</string>
+    <string name="course_details">Course Details</string>
+    <string name="assessments">Assessments</string>
+    <string name="assessment_details">Assessment Details</string>
+    <string name="progress">Progress</string>
+    <string name="note_text">Note text</string>
+    <string name="name">Name</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="term">Term</string>
     <string-array name="course_status">
         <item>Planned</item>
         <item>Dropped</item>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditorAssessmentNoteActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <EditText
+        android:id="@+id/noteText"
+        android:layout_width="275dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="90dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Enter Assessment Note here"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/updateBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="122dp"
+        android:layout_height="78dp"
+        android:onClick="updateNote"
+        android:text="Update"
+        app:layout_constraintBottom_toTopOf="@+id/textBtn"
+        app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteText" />
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="122dp"
+        android:layout_height="78dp"
+        android:onClick="deleteNote"
+        android:text="Delete"
+        app:layout_constraintBottom_toTopOf="@+id/emailBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/updateBtn"
+        app:layout_constraintTop_toBottomOf="@+id/noteText" />
+
+    <Button
+        android:id="@+id/textBtn"
+        android:layout_width="123dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="90dp"
+        android:onClick="textNote"
+        android:text="Text Note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/emailBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateBtn" />
+
+    <Button
+        android:id="@+id/emailBtn"
+        android:layout_width="123dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="90dp"
+        android:onClick="emailNote"
+        android:text="Email Note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textBtn"
+        app:layout_constraintTop_toBottomOf="@+id/deleteBtn" />
+
+</android.support.constraint.ConstraintLayout>

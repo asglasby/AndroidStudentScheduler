@@ -3,11 +3,12 @@ package com.example.myapp3;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EmailActivity extends AppCompatActivity {
+public class EmailActivity extends OptionsMenuActivity {
     private String noteTextIntent;
     EditText noteTextEditText;
     EditText toEditText;
@@ -19,6 +20,9 @@ public class EmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         noteTextEditText = (EditText)findViewById(R.id.note_message_txt);
         noteTextIntent = getIntent().getStringExtra(EXTRA_NOTE_TEXT);

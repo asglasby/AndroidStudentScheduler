@@ -3,6 +3,7 @@ package com.example.myapp3;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +15,7 @@ import com.example.myapp3.Models.Note;
 
 import java.util.ArrayList;
 
-public class NoteListActivity extends AppCompatActivity {
+public class NoteListActivity extends OptionsMenuActivity {
     private String courseIdIntent;
     ArrayList<Note> notesForThisCourseList = new ArrayList<Note>();
 
@@ -33,6 +34,9 @@ public class NoteListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Create Sqliteopenhelper object
         myDbConnection = new DbHelper(NoteListActivity.this);
@@ -101,7 +105,7 @@ public class NoteListActivity extends AppCompatActivity {
         super.onPause();
 
         myDbConnection.close();
-        // Toast.makeText(CourseList.this, myDbConnection.getDatabaseName() + "Closed", Toast.LENGTH_SHORT).show();
+
     }
 
 }
